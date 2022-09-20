@@ -1,1 +1,1 @@
-
+For anyone who wants to be more aware of the context surrounding different social issues, our product, argu.io, is a web application that enables users to discuss important social issues and select different sides of an argument.
