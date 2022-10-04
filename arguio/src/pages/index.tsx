@@ -20,8 +20,8 @@ const Home: NextPage = () => {
 
     <Flex flexDirection="column" width="90%" margin="auto" mt={10} >
       {!buttonClicked &&<>
-      <Input placeholder='Argument' value={inputVal} onChange={handleChange}/>
-        <Button marginLeft="20px" bg="black.500" variant='ghost' size='lg' onClick={()=>setButtonClicked(true)}>
+      <Input placeholder='e.g. "We should give aid to Ukraine"' value={inputVal} onChange={handleChange}/>
+        <Button marginTop={3} bg="black.500" variant='outline' size='lg' onClick={()=>setButtonClicked(true)}>
               Submit
         </Button>
         </>
