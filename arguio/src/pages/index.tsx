@@ -7,6 +7,7 @@ import { Button, Input } from '@chakra-ui/react'
 import { Flex, Text } from '@chakra-ui/react'
 import { useState } from 'react'
 import Argboxes from '../components/Argboxes/Argboxes'
+import Promptbox from '../components/Promptbox/Promptbox'
 
 const Home: NextPage = () => {
   const [inputVal, setInputVal] = useState("");
@@ -25,8 +26,8 @@ const Home: NextPage = () => {
         </Button>
         </>
       }
-
-        {buttonClicked && <Argboxes text={inputVal}/>}
+        {buttonClicked && <Promptbox text={inputVal}/>}
+        {buttonClicked && <Argboxes/>}
         
     </Flex>
     
