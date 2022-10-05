@@ -38,6 +38,7 @@ const Argboxes: React.FC<ArgboxesProps> = ({ posA, posB }) => {
                     <Center><Badge borderRadius={5} px='2' colorScheme='teal' fontSize='1.25em' marginBottom={2}>
                         Entities
                     </Badge></Center>
+                    
                     <Flex w ="100%" flexWrap="wrap" justifyContent="center">
                             <EntityBox text="Entity Name"></EntityBox>
                             <EntityBox text="Entity Name"></EntityBox>

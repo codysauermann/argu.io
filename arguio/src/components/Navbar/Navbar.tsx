@@ -22,7 +22,9 @@ const Navbar: React.FC<NavbarProps> = () => {
             <Button leftIcon={<BiGridAlt />} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' onClick={() => { router.push("/history") }}>
             History
             </Button>
-
+            <Button leftIcon={<BiGridAlt />} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' >
+            Login
+            </Button>
         </Flex>
 
     )
