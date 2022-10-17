@@ -1,5 +1,5 @@
 
-import { Box, Button, ButtonGroup, Flex, FormControl, FormLabel, Icon, Input, InputGroup, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, Flex, FormControl, FormLabel, Icon, Input, InputGroup, useDisclosure, Text } from '@chakra-ui/react'
 import router from 'next/router';
 import { SetStateAction, useState } from 'react';
 import { BiGitBranch, BiGitMerge, BiGitPullRequest, BiGitRepoForked, BiGridAlt } from "react-icons/bi"
@@ -9,12 +9,23 @@ type NavbarProps = {
 
 };
 
+
 const Navbar: React.FC<NavbarProps> = () => {
     const loginModal = useDisclosure() //setup for login modal
     const signUpModal = useDisclosure() //setup for sign up modal
+    
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show) //setup to allow hide/show toggle
-    var username, password, reEnteredPassword //NEEDS TESTED
+
+    const [username, setUsername] = useState("Not Logged In")
+    const handleUsernameChange = (event: { target: { value: SetStateAction<string>; }; }) => setUsername(event.target.value)
+    const resetUsername = (event: any) => setUsername("Not Logged In")
+
+    const [password, setPassword] = useState("")
+    const handlePasswordChange = (event: { target: { value: SetStateAction<string>; }; }) => setPassword(event.target.value)
+
+    const [reEnteredPassword, setReEnteredPassword]  = useState("")
+    const handleReEnteredPasswordChange = (event: { target: { value: SetStateAction<string>; }; }) => setReEnteredPassword(event.target.value)
 
     return ( 
             <Flex bg="teal.100" margin="auto" width="90%" height="75" borderRadius="20px" mt={2} p={4} align="center"> 
@@ -30,10 +41,11 @@ const Navbar: React.FC<NavbarProps> = () => {
             <Button leftIcon={<BiGridAlt />} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' onClick={() => { router.push("/history") }}>
                 History
             </Button>
-
+            
             <Button leftIcon={<BiGitMerge />} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' onClick={loginModal.onOpen}>
                 Login
             </Button>
+            
             <Modal isOpen={loginModal.isOpen} onClose={loginModal.onClose}>
                 <ModalOverlay /> 
                 <ModalContent>
@@ -46,7 +58,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                         <FormLabel>
                             Username
                         </FormLabel>
-                        <Input value = {username} placeholder='Enter Username'/>
+                        <Input placeholder='Enter Username' onChange={handleUsernameChange}/>
                     </FormControl>
 
                     <FormControl mt = {4}>
@@ -54,7 +66,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                             Password
                         </FormLabel>
                         <InputGroup>
-                            <Input pr='4.5rem' type={show ? 'text' : 'password'} value = {password} placeholder='Enter Password'/>
+                            <Input pr='4.5rem' type={show ? 'text' : 'password'} placeholder='Enter Password' onChange={handlePasswordChange}/>
                             <InputRightElement width='4.5rem'>
                                 <Button h='1.75rem' size='sm' onClick={handleClick}>
                                   {show ? 'Hide' : 'Show'}
@@ -79,7 +91,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                                 <FormLabel>
                                     Username
                                 </FormLabel>
-                                <Input value = {username} placeholder='Enter Username'/>
+                                <Input placeholder='Enter Username' onChange={handleUsernameChange}/>
                             </FormControl>
                             
                             <FormControl mt = {4}>
@@ -87,7 +99,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                                     Password
                                 </FormLabel>
                                 <InputGroup>
-                                    <Input pr='4.5rem' type={show ? 'text' : 'password'} value = {password} placeholder='Enter Password'/>
+                                    <Input pr='4.5rem' type={show ? 'text' : 'password'} placeholder='Enter Password' onChange={handlePasswordChange}/>
                                     <InputRightElement width='4.5rem'>
                                         <Button h='1.75rem' size='sm' onClick={handleClick}>
                                             {show ? 'Hide' : 'Show'}
@@ -101,7 +113,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                                     Re-Enter Password
                                 </FormLabel>
                                 <InputGroup>
-                                    <Input pr='4.5rem' type={show ? 'text' : 'password'} value = {reEnteredPassword} placeholder='Re-Enter Password'/>
+                                    <Input pr='4.5rem' type={show ? 'text' : 'password'} placeholder='Re-Enter Password' onChange={handleReEnteredPasswordChange}/>
                                     <InputRightElement width='4.5rem'>
                                         <Button h='1.75rem' size='sm' onClick={handleClick}>
                                             {show ? 'Hide' : 'Show'}
@@ -121,9 +133,10 @@ const Navbar: React.FC<NavbarProps> = () => {
                         </ModalContent>
                     </Modal>
 
-                    <Button colorScheme='twitter' mr={3}>
+                    <Button colorScheme='twitter' mr={3} onClick = {loginModal.onClose}>
                         Login
                     </Button>
+                    
                     
                 </ModalFooter>
                 </ModalContent>
