@@ -13,11 +13,11 @@ const axios = require('axios');
 
 
 
-const { Configuration, OpenAIApi } = require("openai");
-const configuration = new Configuration({
-  apiKey: "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",
-  });
-const openai = new OpenAIApi(configuration);
+// const { Configuration, OpenAIApi } = require("openai");
+//   [.const configuration = new Configuration({
+//   apiKey: "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",
+//   })
+// const openai = new OpenAIApi(configuration);
 
 
 
@@ -36,33 +36,24 @@ const Home: NextPage = () => {
   const callOpenAi = async (inputVal:string) => {
     console.log(inputVal)
 
-try {
+// try {
       
-const response = await openai.createCompletion("text-davinci-002", {
-prompt: "Write a blog post on vadala onions",
-temperature: 0.7,
-max_tokens: 50,
-top_p: 1,
-frequency_penalty: 0,
-presence_penalty: 0,
-});
+// const response = await openai.createCompletion("text-davinci-002", {
+// prompt: "Write a blog post on vadala onions",
+// temperature: 0.7,
+// max_tokens: 50,
+// top_p: 1,
+// frequency_penalty: 0,
+// presence_penalty: 0,
+// });
 
-console.log(response.choices[0].text);
+// console.log(response.choices[0].text);
 
-  setResponseA(response.choices[0].text)
-} catch (error) {
-  setResponseA("Error")
-}
+//   setResponseA(response.choices[0].text)
+// } catch (error) {
+//   setResponseA("Error")
+// }
 
-
-
-    // try {
-    //   const response = await axios.get('https://catfact.ninja/fact');
-    //   console.log('response  ', response.data.fact)
-    //   setResponseA(response.data.fact)
-    // } catch (error) {
-    //   setResponseA("Error")
-    // }
 
 
     try {
@@ -72,10 +63,11 @@ console.log(response.choices[0].text);
     } catch (error) {
       setResponseB("Error")
     }
-
-
-
   }
+
+
+
+  
 
   
   return (
@@ -95,6 +87,8 @@ console.log(response.choices[0].text);
 
 
   )
-}
 
+
+    }
 export default Home
+    
