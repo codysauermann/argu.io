@@ -28,10 +28,10 @@ const Navbar: React.FC<NavbarProps> = () => {
     const handleReEnteredPasswordChange = (event: { target: { value: SetStateAction<string>; }; }) => setReEnteredPassword(event.target.value)
 
     return ( 
-            <Flex bg="teal.100" margin="auto" width="90%" height="75" borderRadius="20px" mt={2} p={4} align="center"> 
+            <Flex bg="teal.100" margin="auto" width="100%" height="75"  mt={2} p={4} align="center"> 
            <Icon as={BiGitRepoForked} w="75px" h = "50px"/>
            
-           <Box   marginBottom={2} p={1} color="yellow" fontSize='2em' onClick={() => { router.push("/") }}>
+           <Box   marginBottom={2} p={1} color="white" fontSize='2em' onClick={() => { router.push("/") }}>
                 argu.io
             </Box>
             <Button leftIcon={<BiGitRepoForked />} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' onClick={() => { router.push("/") }}>

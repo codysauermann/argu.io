@@ -17,17 +17,17 @@ const Argboxes: React.FC<ArgboxesProps> = ({ posA, posB }) => {
         <Flex>
             <SimpleGrid columns={2} spacing={10}>
                 <Box bg='gray.100' w='100%' p={4} color='grey' borderRadius={10} marginLeft={2}>
-                    <Center><Badge borderRadius={5} px='2' colorScheme='teal' fontSize='1.25em'>
-                        For
-                    </Badge></Center>
-                    <Box margin="auto">"{posA}"
+                    <Box borderRadius={5} px='2'bg='teal.100' w='100%' color='black' fontSize='1.25em' align='center'>
+                        <b>FOR</b>
+                    </Box>
+                    <Box margin="auto">{posA}
                     </Box>
                 </Box>
                 <Box bg='gray.100' w='100%' p={4} color='grey' borderRadius={10} marginLeft={2}>
-                    <Center><Badge borderRadius={5} px='2' colorScheme='teal' fontSize='1.25em'>
-                        Against
-                    </Badge></Center>
-                    <Box margin="auto">"{posB}"
+                <Box borderRadius={5} px='2'bg='teal.100' w='100%' color='black' fontSize='1.25em' align='center'>
+                        <b>AGAINST</b>
+                    </Box>
+                    <Box margin="auto">{posB}
                     </Box>
                 </Box>
 

@@ -13,19 +13,10 @@ const axios = require('axios');
 
 
 
-// const { Configuration, OpenAIApi } = require("openai");
-//   [.const configuration = new Configuration({
-//   apiKey: "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",
-//   })
-// const openai = new OpenAIApi(configuration);
-
-
-
-
-
-
 const Home: NextPage = () => {
   const [inputVal, setInputVal] = useState("");
+
+  
   const [buttonClicked, setButtonClicked] = useState(false);
   const [responseA, setResponseA] = useState("")
   const [responseB, setResponseB] = useState("")
@@ -34,48 +25,45 @@ const Home: NextPage = () => {
   }
 
   const callOpenAi = async (inputVal:string) => {
-    console.log(inputVal)
 
-// try {
-      
-// const response = await openai.createCompletion("text-davinci-002", {
-// prompt: "Write a blog post on vadala onions",
-// temperature: 0.7,
-// max_tokens: 50,
-// top_p: 1,
-// frequency_penalty: 0,
-// presence_penalty: 0,
-// });
-
-// console.log(response.choices[0].text);
-
-//   setResponseA(response.choices[0].text)
-// } catch (error) {
-//   setResponseA("Error")
-// }
-
-
-
-    try {
-      const response = await axios.get('https://catfact.ninja/fact');
-      console.log('response  ', response.data.fact)
-      setResponseB(response.data.fact)
-    } catch (error) {
-      setResponseB("Error")
-    }
+    const response = await fetch('https://api.openai.com/v1/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '
+      },
+      body: JSON.stringify({
+        "model": "text-davinci-002",
+        'prompt': inputVal,
+        'temperature': 0.7,
+        'max_tokens': 150
+      })
+    })
+  
+    const data = await response.json()
+    console.log(data)
+    
+    return data.choices[0].text
   }
 
 
+  const get_positions = async (inputVal:string) =>{
+    const promptA = "Objectively explain why '" + inputVal + "' is reasonable in 3 points, ranked by importance"
+    const responseA = await callOpenAi(promptA)
+    
+    setResponseA(responseA)
 
-  
-
-  
+    const promptB = "Objectively explain why '" + inputVal + "' is unreasonable in 3 points, ranked by importance"
+    const responseB = await callOpenAi(promptB)
+    setResponseB(responseB)
+    
+  }
   return (
 
     <Flex flexDirection="column" width="90%" margin="auto" mt={10} >
       {!buttonClicked && <>
         <Input placeholder='e.g. "We should give aid to Ukraine"' value={inputVal} onChange={handleChange} />
-        <Button marginTop={3} bg="black.500" variant='outline' size='lg' onClick={() => [callOpenAi(inputVal),setButtonClicked(true)]}>
+        <Button marginTop={3} bg="black.500" variant='outline' size='lg' onClick={() => [get_positions(inputVal),setButtonClicked(true)]}>
           Submit
         </Button>
       </>
