@@ -8,15 +8,14 @@ import { Flex, Text } from '@chakra-ui/react'
 import { useState } from 'react'
 import Argboxes from '../components/Argboxes/Argboxes'
 import Promptbox from '../components/Promptbox/Promptbox'
+const API_KEY = ""
 const axios = require('axios');
-
 
 
 
 const Home: NextPage = () => {
   const [inputVal, setInputVal] = useState("");
 
-  
   const [buttonClicked, setButtonClicked] = useState(false);
   const [responseA, setResponseA] = useState("")
   const [responseB, setResponseB] = useState("")
@@ -25,18 +24,18 @@ const Home: NextPage = () => {
   }
 
   const callOpenAi = async (inputVal:string) => {
-
     const response = await fetch('https://api.openai.com/v1/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer '
+        'Authorization': API_KEY
       },
       body: JSON.stringify({
         "model": "text-davinci-002",
         'prompt': inputVal,
-        'temperature': 0.7,
-        'max_tokens': 150
+        'temperature': 0.85,
+        'max_tokens': 3000,
+
       })
     })
   
@@ -48,7 +47,7 @@ const Home: NextPage = () => {
 
 
   const get_positions = async (inputVal:string) =>{
-    const promptA = "Objectively explain why '" + inputVal + "' is reasonable in 3 points, ranked by importance"
+    const promptA = "Objectively explain why '" + inputVal + "' is reasonable in 3 points, ranked by importance."
     const responseA = await callOpenAi(promptA)
     
     setResponseA(responseA)
@@ -59,7 +58,6 @@ const Home: NextPage = () => {
     
   }
   return (
-
     <Flex flexDirection="column" width="90%" margin="auto" mt={10} >
       {!buttonClicked && <>
         <Input placeholder='e.g. "We should give aid to Ukraine"' value={inputVal} onChange={handleChange} />

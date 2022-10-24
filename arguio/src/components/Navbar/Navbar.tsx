@@ -3,29 +3,113 @@ import { Box, Button, ButtonGroup, Flex, FormControl, FormLabel, Icon, Input, In
 import router from 'next/router';
 import { SetStateAction, useState } from 'react';
 import { BiGitBranch, BiGitMerge, BiGitPullRequest, BiGitRepoForked, BiGridAlt } from "react-icons/bi"
+import { BsPerson} from "react-icons/bs"
+
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, InputRightElement, Badge } from '@chakra-ui/react'
+
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth" // New import
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAa9Z61heACTTYjfSfGb-7wJZS71ZtSgXo",
+    authDomain: "arguio-3dea1.firebaseapp.com",
+    databaseURL: "https://arguio-3dea1-default-rtdb.firebaseio.com",
+    projectId: "arguio-3dea1",
+    storageBucket: "arguio-3dea1.appspot.com",
+    messagingSenderId: "281637004163",
+    appId: "1:281637004163:web:ca86746082879f9d780cb6",
+    measurementId: "G-4SV6XRXG7P"
+  };
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app)
+
+
+
+import {signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { userAgent } from 'next/server';
+
 
 type NavbarProps = {
 
 };
 
-
 const Navbar: React.FC<NavbarProps> = () => {
     const loginModal = useDisclosure() //setup for login modal
+    const [loggedIn, setloggedIn] = useState(false)
     const signUpModal = useDisclosure() //setup for sign up modal
-    
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show) //setup to allow hide/show toggle
 
-    const [username, setUsername] = useState("Not Logged In")
-    const handleUsernameChange = (event: { target: { value: SetStateAction<string>; }; }) => setUsername(event.target.value)
-    const resetUsername = (event: any) => setUsername("Not Logged In")
+    const [Email, setEmail] = useState("Not Logged In")
+    const handleEmailChange = (event: { target: { value: SetStateAction<string>; }; }) => setEmail(event.target.value)
+    const resetEmail = (event: any) => setEmail("Not Logged In")
 
     const [password, setPassword] = useState("")
     const handlePasswordChange = (event: { target: { value: SetStateAction<string>; }; }) => setPassword(event.target.value)
 
     const [reEnteredPassword, setReEnteredPassword]  = useState("")
     const handleReEnteredPasswordChange = (event: { target: { value: SetStateAction<string>; }; }) => setReEnteredPassword(event.target.value)
+
+
+
+
+
+
+
+    const handleSignup = () => {
+        console.log(Email)
+        console.log(password)
+        
+      if (Email.length < 4) {
+        alert('Please enter an email address.');
+        return;
+      }
+      if (password.length < 4) {
+        alert('Please enter a password.');
+        return;
+      }
+      createUserWithEmailAndPassword(auth, Email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log(user)
+            alert("Signup successful! Please log in to user your account")
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorMessage)
+            alert(error.message)
+        });
+        signUpModal.onClose()
+        loginModal.onClose()
+    }
+    const handleLogin = () => {
+        console.log(Email)
+        console.log(password)
+
+        signInWithEmailAndPassword(auth, Email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(user)
+          setloggedIn(true)
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(error.message)
+        });
+
+        loginModal.onClose()
+    
+    }
+
+
+
+
+
+
 
     return ( 
             <Flex bg="teal.100" margin="auto" width="100%" height="75"  mt={2} p={4} align="center"> 
@@ -41,10 +125,17 @@ const Navbar: React.FC<NavbarProps> = () => {
             <Button leftIcon={<BiGridAlt />} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' onClick={() => { router.push("/history") }}>
                 History
             </Button>
-            
-            <Button leftIcon={<BiGitMerge />} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' onClick={loginModal.onOpen}>
+            {!loggedIn && <>
+                <Button leftIcon={<BiGitMerge />} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' onClick={loginModal.onOpen}>
                 Login
             </Button>
+            </>}
+            {loggedIn && <>
+                <Button leftIcon={<BsPerson/>} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' onClick={loginModal.onOpen}>
+                Authenticated
+            </Button>
+            </>}
+            
             
             <Modal isOpen={loginModal.isOpen} onClose={loginModal.onClose}>
                 <ModalOverlay /> 
@@ -56,9 +147,9 @@ const Navbar: React.FC<NavbarProps> = () => {
                 <ModalBody pb = {6}>
                     <FormControl>
                         <FormLabel>
-                            Username
+                            Email
                         </FormLabel>
-                        <Input placeholder='Enter Username' onChange={handleUsernameChange}/>
+                        <Input placeholder='Enter Email' onChange={handleEmailChange}/>
                     </FormControl>
 
                     <FormControl mt = {4}>
@@ -89,9 +180,9 @@ const Navbar: React.FC<NavbarProps> = () => {
                         <ModalBody pb = {6}>
                             <FormControl>
                                 <FormLabel>
-                                    Username
+                                    Email
                                 </FormLabel>
-                                <Input placeholder='Enter Username' onChange={handleUsernameChange}/>
+                                <Input placeholder='Enter Email' onChange={handleEmailChange}/>
                             </FormControl>
                             
                             <FormControl mt = {4}>
@@ -123,7 +214,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                             </FormControl>
                         </ModalBody>
                         <ModalFooter>
-                            <Button colorScheme='twitter' mr ={3}>
+                            <Button colorScheme='twitter' mr ={3} onClick={handleSignup}>
                                 Sign Up
                             </Button>
                             <Button mr = {3} onClick = {signUpModal.onClose}>
@@ -133,7 +224,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                         </ModalContent>
                     </Modal>
 
-                    <Button colorScheme='twitter' mr={3} onClick = {loginModal.onClose}>
+                    <Button colorScheme='twitter' mr={3} onClick = {handleLogin}>
                         Login
                     </Button>
                     
