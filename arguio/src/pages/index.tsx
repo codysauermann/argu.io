@@ -8,7 +8,7 @@ import { Flex, Text } from '@chakra-ui/react'
 import { useState } from 'react'
 import Argboxes from '../components/Argboxes/Argboxes'
 import Promptbox from '../components/Promptbox/Promptbox'
-const API_KEY = ""
+const API_KEY="Bearer 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"
 const axios = require('axios');
 
 
