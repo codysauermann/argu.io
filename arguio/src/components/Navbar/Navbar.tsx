@@ -42,9 +42,8 @@ const Navbar: React.FC<NavbarProps> = () => {
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show) //setup to allow hide/show toggle
 
-    const [Email, setEmail] = useState("Not Logged In")
+    const [Email, setEmail] = useState("")
     const handleEmailChange = (event: { target: { value: SetStateAction<string>; }; }) => setEmail(event.target.value)
-    const resetEmail = (event: any) => setEmail("Not Logged In")
 
     const [password, setPassword] = useState("")
     const handlePasswordChange = (event: { target: { value: SetStateAction<string>; }; }) => setPassword(event.target.value)
@@ -68,6 +67,10 @@ const Navbar: React.FC<NavbarProps> = () => {
       }
       if (password.length < 4) {
         alert('Please enter a password.');
+        return;
+      }
+      if (password != reEnteredPassword) {
+        alert('Passwords do not match');
         return;
       }
       createUserWithEmailAndPassword(auth, Email, password)
@@ -104,6 +107,12 @@ const Navbar: React.FC<NavbarProps> = () => {
         loginModal.onClose()
     
     }
+    const handleLogout = () => {
+        setEmail("");
+        setPassword("");
+        setReEnteredPassword("");
+        setloggedIn(false);
+    }
 
 
 
@@ -127,13 +136,17 @@ const Navbar: React.FC<NavbarProps> = () => {
             </Button>
             {!loggedIn && <>
                 <Button leftIcon={<BiGitMerge />} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' onClick={loginModal.onOpen}>
-                Login
-            </Button>
+                    Login
+                </Button>
             </>}
             {loggedIn && <>
-                <Button leftIcon={<BsPerson/>} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' onClick={loginModal.onOpen}>
-                Authenticated
-            </Button>
+                <Button leftIcon={<BsPerson/>} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg'>
+                    {Email}
+                </Button>
+
+                <Button leftIcon={<BiGitMerge/>} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' onClick={handleLogout}>
+                    Logout
+                </Button>
             </>}
             
             
