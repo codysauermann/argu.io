@@ -8,8 +8,25 @@ import { Flex, Text } from '@chakra-ui/react'
 import { useState } from 'react'
 import Argboxes from '../components/Argboxes/Argboxes'
 import Promptbox from '../components/Promptbox/Promptbox'
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth"
+import { getDatabase, ref, child, push, update } from "firebase/database"
 const axios = require('axios');
 
+const firebaseConfig = {
+  apiKey: "AIzaSyAa9Z61heACTTYjfSfGb-7wJZS71ZtSgXo",
+  authDomain: "arguio-3dea1.firebaseapp.com",
+  databaseURL: "https://arguio-3dea1-default-rtdb.firebaseio.com",
+  projectId: "arguio-3dea1",
+  storageBucket: "arguio-3dea1.appspot.com",
+  messagingSenderId: "281637004163",
+  appId: "1:281637004163:web:ca86746082879f9d780cb6",
+  measurementId: "G-4SV6XRXG7P"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase();
+const auth = getAuth(app);
 
 
 const Home: NextPage = () => {
@@ -56,6 +73,27 @@ const Home: NextPage = () => {
     setResponseB(responseB)
     
   }
+
+  function pushToDatabase(_inputVal: any, _resposeA: any, _resposeB: any) { //push current search to database
+    var currentUserID = auth.currentUser?.uid
+    var currentUser = auth.currentUser
+    const arguData = {
+      username : currentUser,
+      uid : currentUserID,
+      topic : _inputVal,
+      responseFor : _resposeA,
+      responseAgainst : _resposeB
+    }
+    
+    const newPostKey = push(child(ref(db), 'history')).key;
+
+    const updates = {};
+    //updates['' + newPostKey] = arguData; //Error
+    //updates['/user-posts/' + uid + '/' + newPostKey] = arguData; //Error
+
+  return update(ref(db), updates);
+  }
+  
   return (
     <Flex flexDirection="column" width="90%" margin="auto" mt={10} >
       {!buttonClicked && <>
