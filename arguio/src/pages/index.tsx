@@ -10,11 +10,11 @@ import Argboxes from '../components/Argboxes/Argboxes'
 import Promptbox from '../components/Promptbox/Promptbox'
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"
-import { getDatabase, ref, child, push, update } from "firebase/database"
+import { doc, setDoc, getFirestore } from "firebase/firestore"; 
 const axios = require('axios');
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAa9Z61heACTTYjfSfGb-7wJZS71ZtSgXo",
+  apiKey: "",
   authDomain: "arguio-3dea1.firebaseapp.com",
   databaseURL: "https://arguio-3dea1-default-rtdb.firebaseio.com",
   projectId: "arguio-3dea1",
@@ -25,7 +25,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getDatabase();
+const db = getFirestore(app);
 const auth = getAuth(app);
 
 
@@ -72,26 +72,17 @@ const Home: NextPage = () => {
     const responseB = await callOpenAi(promptB)
     setResponseB(responseB)
     
+    if (auth.currentUser != null) {
+      const currentUserID = auth.currentUser.uid;
+      pushToDatabase(currentUserID,inputVal, responseA, responseB)
+    }
   }
 
-  function pushToDatabase(_inputVal: any, _resposeA: any, _resposeB: any) { //push current search to database
-    var currentUserID = auth.currentUser?.uid
-    var currentUser = auth.currentUser
-    const arguData = {
-      username : currentUser,
-      uid : currentUserID,
-      topic : _inputVal,
-      responseFor : _resposeA,
-      responseAgainst : _resposeB
-    }
-    
-    const newPostKey = push(child(ref(db), 'history')).key;
-
-    const updates = {};
-    //updates['' + newPostKey] = arguData; //Error
-    //updates['/user-posts/' + uid + '/' + newPostKey] = arguData; //Error
-
-  return update(ref(db), updates);
+  async function pushToDatabase(_currentUID: string,_inputVal: any, _resposeA: any, _resposeB: any) { //push current search to database
+    await setDoc(doc(db, _currentUID, _inputVal), {
+      for: _resposeA,
+      against: _resposeB
+    });
   }
   
   return (
