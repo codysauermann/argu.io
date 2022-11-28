@@ -112,6 +112,8 @@ const Navbar: React.FC<NavbarProps> = () => {
         setPassword("");
         setReEnteredPassword("");
         setloggedIn(false);
+        auth.signOut();
+        alert("You have been logged out!")
     }
 
 
