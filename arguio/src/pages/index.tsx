@@ -14,7 +14,7 @@ import { doc, setDoc, getFirestore } from "firebase/firestore";
 const axios = require('axios');
 
 const firebaseConfig = {
-  apiKey: "",
+  apiKey: "AIzaSyAa9Z61heACTTYjfSfGb-7wJZS71ZtSgXo",
   authDomain: "arguio-3dea1.firebaseapp.com",
   databaseURL: "https://arguio-3dea1-default-rtdb.firebaseio.com",
   projectId: "arguio-3dea1",
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': API_KEY
+        'Authorization': "Bearer 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"
       },
       body: JSON.stringify({
         "model": "text-davinci-002",

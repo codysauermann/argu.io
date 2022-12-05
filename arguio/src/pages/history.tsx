@@ -8,9 +8,10 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"
 import { doc, getFirestore, getDoc, collection, query, where, getDocs, AggregateQuerySnapshot } from "firebase/firestore";
 import { useState, useEffect } from "react" 
+import { Console } from 'node:console'
 
 const firebaseConfig = {
-  apiKey: "",
+  apiKey: "AIzaSyAa9Z61heACTTYjfSfGb-7wJZS71ZtSgXo",
   authDomain: "arguio-3dea1.firebaseapp.com",
   databaseURL: "https://arguio-3dea1-default-rtdb.firebaseio.com",
   projectId: "arguio-3dea1",
@@ -48,6 +49,7 @@ const History: NextPage = () => {
       const querySnapshot = await getDocs(collection(db, auth.currentUser.uid));
       querySnapshot.forEach((doc) => {
         const temp = doc.data();
+        console.log(temp)
         setName(doc.id)
         setResponseA(temp.for)
         setResponseB(temp.against)

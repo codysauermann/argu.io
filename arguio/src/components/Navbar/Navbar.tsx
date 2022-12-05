@@ -12,7 +12,7 @@ import { getAuth } from "firebase/auth" // New import
 
 
 const firebaseConfig = {
-    apiKey: "",
+    apiKey: "AIzaSyAa9Z61heACTTYjfSfGb-7wJZS71ZtSgXo",
     authDomain: "arguio-3dea1.firebaseapp.com",
     databaseURL: "https://arguio-3dea1-default-rtdb.firebaseio.com",
     projectId: "arguio-3dea1",
