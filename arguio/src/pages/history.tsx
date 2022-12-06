@@ -81,6 +81,7 @@ const History: NextPage = () => {
         <Heading color= "teal.400" fontWeight={600} mb = "20px" size='2xl' textAlign='center'>
           History
         </Heading>
+        <Box background="gray.400" height="2px" mb = "20px"></Box>
         <Accordion allowToggle>
           <AccordionItem>
             <h2>

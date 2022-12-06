@@ -129,25 +129,25 @@ const Navbar: React.FC<NavbarProps> = () => {
            <Box   marginBottom={2} p={1} color="black" fontSize='2em' fontWeight='bold' onClick={() => { router.push("/") }}>
                 argu.io
             </Box>
-            <Button leftIcon={<BiGitRepoForked />} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' onClick={() => { router.push("/") }}>
+            <Button leftIcon={<BiGitRepoForked />} marginLeft="20px" bg="white" color="black" variant='solid' size='lg' onClick={() => { router.push("/") }}>
                 Generate
             </Button>
 
-            <Button leftIcon={<BiGridAlt />} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' onClick={() => { router.push("/history") }}>
+            <Button leftIcon={<BiGridAlt />} marginLeft="20px" bg="white" color="black" variant='solid' size='lg' onClick={() => { router.push("/history") }}>
                 History
             </Button>
             {!loggedIn && <>
-                <Button leftIcon={<BiGitMerge />} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' onClick={loginModal.onOpen}>
+                <Button leftIcon={<BiGitMerge />} marginLeft="20px" bg="white" color="black" variant='solid' size='lg' onClick={loginModal.onOpen}>
                     Login
                 </Button>
             </>}
             {loggedIn && <>
-                <Button leftIcon={<BsPerson/>} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg'>
-                    {Email}
-                </Button>
-
-                <Button leftIcon={<BiGitMerge/>} marginLeft="20px" bg="white" color="grey" variant='solid' size='lg' onClick={handleLogout}>
+                <Button leftIcon={<BiGitMerge/>} marginLeft="20px" bg="white" color="black" variant='solid' size='lg' onClick={handleLogout}>
                     Logout
+                </Button>
+                
+                <Button leftIcon={<BsPerson/>} marginLeft="20px" bg="white" color="black" variant='solid' size='lg'>
+                    {Email}
                 </Button>
             </>}
             
