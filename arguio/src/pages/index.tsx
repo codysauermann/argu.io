@@ -10,7 +10,17 @@ const Home: NextPage = () => {
           as={Box}
           textAlign={'center'}
           spacing={{ base: 8, md: 10 }}
-          py={{ base: 20, md: 32 }}>
+          py={{ base: 20, md: 28 }}>
+
+          <Heading
+            fontWeight={600}
+            fontSize={{ base: '2xl', sm: '4xl', md: '7xl' }}
+            lineHeight={'110%'}>
+            <Text color={'teal.300'} fontWeight='extrabold'>
+              <em> argu.io </em>
+            </Text>
+          </Heading>
+
           <Heading
             fontWeight={600}
             fontSize={{ base: '2xl', sm: '4xl', md: '7xl' }}
