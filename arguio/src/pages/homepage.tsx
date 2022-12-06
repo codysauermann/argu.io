@@ -1,8 +1,4 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import Layout from '../components/Layout/Layout'
 import router from 'next/router';
 import {Container, Box, Text, Stack, Heading, Button} from '@chakra-ui/react'
 
@@ -14,7 +10,7 @@ const HomePage: NextPage = () => {
           as={Box}
           textAlign={'center'}
           spacing={{ base: 8, md: 10 }}
-          py={{ base: 20, md: 36 }}>
+          py={{ base: 20, md: 32 }}>
           <Heading
             fontWeight={600}
             fontSize={{ base: '2xl', sm: '4xl', md: '7xl' }}
@@ -41,6 +37,9 @@ const HomePage: NextPage = () => {
               bg={'teal.400'}
               rounded={'full'}
               px={6}
+              boxShadow={
+                '0px 1px 6px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
+              }
               _hover={{
                 bg: 'teal.500',
               }}>

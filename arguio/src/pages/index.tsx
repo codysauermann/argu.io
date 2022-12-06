@@ -4,7 +4,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Layout from '../components/Layout/Layout'
 import { Button, Input } from '@chakra-ui/react'
-import { Flex, Text } from '@chakra-ui/react'
+import { Flex, Text, Heading, Box } from '@chakra-ui/react'
 import { useState } from 'react'
 import Argboxes from '../components/Argboxes/Argboxes'
 import Promptbox from '../components/Promptbox/Promptbox'
@@ -87,15 +87,41 @@ const Home: NextPage = () => {
   
   return (
     <Flex flexDirection="column" width="90%" margin="auto" mt={10} >
+      <Box textAlign="center" py={1} px={6}>
+          <Heading
+            display="inline-block"
+            size="xl"
+            bgGradient="linear(to-r, teal.300, teal.400)"
+            backgroundClip="text"
+            height="50px">
+            Argument Generator
+          </Heading>
+      </Box>
+
       {!buttonClicked && <>
+        <Text color={'gray.500'} mb={6} fontSize='lg' textAlign="center">
+          Enter a statement below to receive arguments for and against it.
+        </Text>
         <Input placeholder='e.g. "We should give aid to Ukraine"' value={inputVal} onChange={handleChange} />
         <Button marginTop={3} bg="black.500" variant='outline' size='lg' onClick={() => [get_positions(inputVal),setButtonClicked(true)]}>
-          Submit
+           Submit
         </Button>
       </>
       }
       {buttonClicked && <Promptbox text={inputVal} />}
       {buttonClicked && <Argboxes posA={responseA} posB={responseB} />} 
+      {buttonClicked && <>
+        <Button w='120px' alignSelf={'end'} onClick={() => {setInputVal(""),setButtonClicked(false) }}
+            colorScheme={'teal'}
+            bg={'teal.300'}
+            rounded={'full'}
+            mt={4}
+            _hover={{
+              bg: 'teal.400',
+            }}>
+              Go Back
+          </Button>
+      </>}
 
     </Flex>
 
