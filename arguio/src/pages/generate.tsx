@@ -29,7 +29,7 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 
-const Home: NextPage = () => {
+const Generate: NextPage = () => {
   const [inputVal, setInputVal] = useState("");
 
   const [buttonClicked, setButtonClicked] = useState(false);
@@ -130,6 +130,4 @@ const Home: NextPage = () => {
 
 
     }
-export default Home
-    
-
+export default Generate

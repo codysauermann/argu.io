@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import router from 'next/router';
 import {Container, Box, Text, Stack, Heading, Button} from '@chakra-ui/react'
 
-const HomePage: NextPage = () => {
+const Home: NextPage = () => {
   return (
     <div>
     <Container maxW={'4xl'}>
@@ -61,4 +61,4 @@ const HomePage: NextPage = () => {
       </div>
   )
 }
-export default HomePage
+export default Home
