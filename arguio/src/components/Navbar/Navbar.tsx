@@ -124,12 +124,12 @@ const Navbar: React.FC<NavbarProps> = () => {
 
     return ( 
             <Flex bg="teal.100" margin="auto" width="100%" height="75"  mt={2} p={4} align="center"> 
-           <Icon as={BiGitRepoForked} w="75px" h = "50px" onClick={() => { router.push("/homepage") }}/>
+           <Icon as={BiGitRepoForked} w="75px" h = "50px" onClick={() => { router.push("/") }}/>
            
            <Box   marginBottom={2} p={1} color="black" fontSize='2em' fontWeight='bold' onClick={() => { router.push("/") }}>
                 argu.io
             </Box>
-            <Button leftIcon={<BiGitRepoForked />} marginLeft="20px" bg="white" color="black" variant='solid' size='lg' onClick={() => { router.push("/") }}>
+            <Button leftIcon={<BiGitRepoForked />} marginLeft="20px" bg="white" color="black" variant='solid' size='lg' onClick={() => { router.push("/generate") }}>
                 Generate
             </Button>
 
