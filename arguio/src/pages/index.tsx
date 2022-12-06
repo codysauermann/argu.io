@@ -32,7 +32,7 @@ const Home: NextPage = () => {
           </Heading>
           <Text color={'gray.500'}>
             For anyone who wants to be more aware of the context surrounding 
-            different social issues, our product, argu.io, is a web application 
+            different social issues, our product, <b>argu.io</b>, is a web application 
             that enables users to discuss important social issues and view 
             different sides of an argument.
           </Text>
@@ -46,7 +46,7 @@ const Home: NextPage = () => {
               colorScheme={'teal'}
               bg={'teal.400'}
               rounded={'full'}
-              px={6}
+              px={8}
               boxShadow={
                 '0px 1px 6px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
               }
