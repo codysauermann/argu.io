@@ -87,7 +87,7 @@ const History: NextPage = () => {
             <h2>
             <AccordionButton background="gray.100">
               <Box flex='1' textAlign='left' color= "black" fontSize='2xl'>
-                "{name}"
+                <b>"{name}"</b>
               </Box>
               <AccordionIcon />
             </AccordionButton>
