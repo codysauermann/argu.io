@@ -6,7 +6,7 @@ import Layout from '../components/Layout/Layout'
 import {Badge, Flex, Heading, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Button} from '@chakra-ui/react'
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"
-import { doc, getFirestore, getDoc, collection, query, where, getDocs, AggregateQuerySnapshot } from "firebase/firestore";
+import { doc, getFirestore, getDoc, collection, query, where, getDocs, AggregateQuerySnapshot, orderBy, limit } from "firebase/firestore";
 import { useState, useEffect } from "react" 
 import { Console } from 'node:console'
 
@@ -46,7 +46,8 @@ const History: NextPage = () => {
   //gets data from firestore
   async function GetArguData() {
     if(auth.currentUser != null) {
-      const querySnapshot = await getDocs(collection(db, auth.currentUser.uid));
+      const q = query(collection(db, auth.currentUser.uid), limit(6)) //query of previous 6 searchs from firestore
+      const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         const temp = doc.data();
         console.log(temp)
@@ -60,8 +61,6 @@ const History: NextPage = () => {
     }
   } 
 
-  //initializing Array for Argument Storage
-  var arguArray = new Array<ArgumentData>
 
   //call GetArguData
   useEffect(() => {
@@ -74,35 +73,40 @@ const History: NextPage = () => {
   return (
     <Flex flexDirection="column" width="90%" margin="auto" mt={10} >
       {auth.currentUser == null && <>
-        <Heading marginLeft="325px" color= "gray">
+        <Heading textAlign='center' color= "gray.500" fontWeight={600}>
           Please login in to view your history
         </Heading>
       </>}
-      {auth.currentUser != null && arguArray.length > 0 && <>
-        <Heading marginLeft="550px" color= "gray">
+      {auth.currentUser != null && <>
+        <Heading color= "teal.400" fontWeight={600} mb = "20px" size='2xl' textAlign='center'>
           History
         </Heading>
-        <Accordion>
+        <Accordion allowToggle>
           <AccordionItem>
             <h2>
-            <AccordionButton>
-              <Box flex='1' textAlign='left'>
-                Section 1 title
+            <AccordionButton background="gray.100">
+              <Box flex='1' textAlign='left' color= "black" fontSize='2xl'>
+                "{name}"
               </Box>
               <AccordionIcon />
             </AccordionButton>
             </h2>
             <AccordionPanel pb={4}>
-              test
+              <Box background= "teal.100" color="black" fontSize="lg">
+                Arguments For:
+              </Box>
+              {responseA} 
+            </AccordionPanel>
+            <AccordionPanel pb = {4}>
+              <Box background="teal.100" color="black" fontSize="lg">
+                Arguments Against:
+              </Box>
+              {responseB}
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
       </>}
-      {auth.currentUser != null && arguArray.length <= 0 && <>
-        <Box>
-          {arguArray.length}
-        </Box>
-      </>}
+      
 
     </Flex>
   )
