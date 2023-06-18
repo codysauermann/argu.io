@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Layout from '../components/Layout/Layout'
+import HistoryItem from '../components/HistoryItems/HistoryItem'
 import {Badge, Flex, Heading, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Button} from '@chakra-ui/react'
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"
@@ -26,10 +27,8 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const History: NextPage = () => {
-
-  const [responseA, setResponseA] = useState("")
-  const [responseB, setResponseB] = useState("")
-  const [name, setName] = useState("")
+  
+  const [history, setHistory] = useState<ArgumentData[]>([]);
 
   //class for returning argument data from firestore
   class ArgumentData { 
@@ -44,71 +43,59 @@ const History: NextPage = () => {
   }
 
   //gets data from firestore
-  async function GetArguData() {
-    if(auth.currentUser != null) {
-      const q = query(collection(db, auth.currentUser.uid), limit(6)) //query of previous 6 searchs from firestore
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        const temp = doc.data();
-        console.log(temp)
-        setName(doc.id)
-        setResponseA(temp.for)
-        setResponseB(temp.against)
-      });
-    }
-    else {
-      return
+  const GetArguData = async () => {
+    let argumentArr : ArgumentData[];
+    argumentArr = [];
+    try {
+      if(auth.currentUser != null) {
+        const q = query(collection(db, auth.currentUser.uid), limit(6)) //query of previous 6 searchs from firestore
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          const temp = doc.data();
+          let newArg = new ArgumentData(doc.id, temp.for, temp.against);
+          argumentArr.push(newArg);
+          console.log(temp);
+        });
+        setHistory(argumentArr);
+      }
+    } catch (error) {
+      console.log(error);
+      return;
     }
   } 
 
-
+  
   //call GetArguData
   useEffect(() => {
     let ignore = false;
-    
     if (!ignore)  GetArguData()
     return () => { ignore = true; }
-    },[]);
+    }, []);
 
   return (
     <Flex flexDirection="column" width="90%" margin="auto" mt={10} >
-      {auth.currentUser == null && <>
+      {auth.currentUser == null ? (
         <Heading textAlign='center' color= "gray.500" fontWeight={600}>
           Please login in to view your history
         </Heading>
-      </>}
-      {auth.currentUser != null && <>
-        <Heading color= "teal.400" fontWeight={600} mb = "20px" size='2xl' textAlign='center'>
-          History
-        </Heading>
-        <Box background="gray.400" height="2px" mb = "20px"></Box>
-        <Accordion allowToggle>
-          <AccordionItem>
-            <h2>
-            <AccordionButton background="gray.100">
-              <Box flex='1' textAlign='left' color= "black" fontSize='2xl'>
-                <b>"{name}"</b>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            </h2>
-            <AccordionPanel pb={4}>
-              <Box background= "teal.100" color="black" fontSize="lg">
-                Arguments For:
-              </Box>
-              {responseA} 
-            </AccordionPanel>
-            <AccordionPanel pb = {4}>
-              <Box background="teal.100" color="black" fontSize="lg">
-                Arguments Against:
-              </Box>
-              {responseB}
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
-      </>}
-      
-
+      ) : (
+        <>
+          <Heading color= "teal.400" fontWeight={600} mb = "20px" size='2xl' textAlign='center'>
+            History
+          </Heading>
+          <Box background="gray.400" height="2px" mb = "20px"></Box>
+          <Accordion allowToggle>
+            {history.map((argument) => (
+              <HistoryItem 
+              key={argument.name}
+              name={argument.name} 
+              for={argument.responseA} 
+              against={argument.responseB}
+              />
+            ))}
+          </Accordion>
+        </>
+      )}
     </Flex>
   )
 }
