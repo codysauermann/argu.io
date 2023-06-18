@@ -1,11 +1,9 @@
 
-import { Box, Button, ButtonGroup, Flex, FormControl, FormLabel, Icon, Input, InputGroup, useDisclosure, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, FormControl, FormLabel, Icon, Input, InputGroup, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, InputRightElement } from '@chakra-ui/react'
 import router from 'next/router';
 import { SetStateAction, useState } from 'react';
-import { BiGitBranch, BiGitMerge, BiGitPullRequest, BiGitRepoForked, BiGridAlt } from "react-icons/bi"
+import { BiGitMerge, BiGitRepoForked, BiGridAlt } from "react-icons/bi"
 import { BsPerson} from "react-icons/bs"
-
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, InputRightElement, Badge } from '@chakra-ui/react'
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth" // New import
@@ -85,8 +83,7 @@ const Navbar: React.FC<NavbarProps> = () => {
             console.log(errorMessage)
             alert(error.message)
         });
-        signUpModal.onClose()
-        loginModal.onClose()
+        signUpModal.onClose();
     }
     const handleLogin = () => {
         console.log(Email)
@@ -97,14 +94,13 @@ const Navbar: React.FC<NavbarProps> = () => {
           const user = userCredential.user;
           console.log(user)
           setloggedIn(true)
+          loginModal.onClose();
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           alert(error.message)
         });
-
-        loginModal.onClose()
     
     }
     const handleLogout = () => {
