@@ -1,5 +1,5 @@
 import React from 'react';
-import {Flex} from chakra
+import {Flex} from '@chakra-ui/react';
 
 type InputProps = {
     

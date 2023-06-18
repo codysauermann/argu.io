@@ -44,7 +44,7 @@ const Generate: NextPage = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': "Bearer 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"
+        'Authorization': "Bearer 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" //depricated key
       },
       body: JSON.stringify({
         "model": "text-davinci-002",
